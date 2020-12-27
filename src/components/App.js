@@ -63,13 +63,23 @@ class App extends Component {
     });
   };
 
+  getHighSCore = () => {
+      const scores = this.state.players.map(p => p.score);
+      //Finds the max value from list of scores using spread operator
+      const highScore = Math.max(...scores);
+      //checks for a score greater than 0
+      if (highScore) {
+          return highScore;
+      }
+      return null;
+  }
+
+
   render() {
+    const highScore = this.getHighSCore();
     return (
       <div className="scoreboard">
-        <Header 
-          title="Scoreboard" 
-          players={this.state.players}
-        />
+        <Header players={this.state.players} />
   
         {/* Players list */}
         {this.state.players.map( (player,index) =>
@@ -80,7 +90,9 @@ class App extends Component {
             key={player.id.toString()}
             index={index}
             changeScore={this.handleScoreChange}
-            removePlayer={this.handleRemovePlayer}           
+            removePlayer={this.handleRemovePlayer}
+            //Player receives a boolean that determines if they display the gold crown
+            isHighSCore={highScore === player.score}
           />
         )}
 
