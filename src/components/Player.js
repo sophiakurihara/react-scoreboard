@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { Consumer } from './Context';
 import Counter from "./Counter";
 import Icon from "./Icon";
 
@@ -7,41 +8,42 @@ import Icon from "./Icon";
 class Player extends PureComponent{
 
     static propTypes = {
-        changeScore: PropTypes.func,
-        removePlayer: PropTypes.func,
-        name: PropTypes.string.isRequired,
-        score: PropTypes.number,
-        id: PropTypes.number,
-        index: PropTypes.number,
-        isHighScore: PropTypes.bool
+        index: PropTypes.number
     };
 
     render() {
         const {
-            name,
-            id,
-            score,
-            index,
-            removePlayer,
-            changeScore
+            index
         } = this.props;
 
-        console.log(name + ' rendered');
-
         return (
-
             <div className="player">
-                <span className="player-name">
-                <button className="remove-player" onClick={() => removePlayer(id)}>✖</button>
+                <Consumer>
+                    { ({ actions,players }) => {
+                       const getHighScore = () => {
+                            const scores = players.map(p => p.score);
+                            const highScore = Math.max(...scores);
+                            //checks for a score greater than 0
+                            if (highScore) {
+                                return highScore;
+                            }
+                            return null;
+                        };
 
-                <Icon isHighScore={this.props.isHighSCore} />
-                { name }
-                </span>
+                        return (
+                            <span className="player-name">
+                            <button className="remove-player"
+                                onClick={() => actions.removePlayer(players[index].id)}>✖</button>
+
+                             <Icon isHighScore={getHighScore() === players[index].score}/>
+                                {players[index].name}
+                            </span>
+                        );
+                    }}
+                </Consumer>
 
                 <Counter
-                    score={score}
                     index={index}
-                    changeScore={changeScore}
                 />
             </div>
         );
