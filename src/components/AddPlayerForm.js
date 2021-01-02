@@ -1,8 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useRef, useContext } from 'react';
+import { ScoreboardContext } from "./Context";
 
 const AddPlayerForm = () => {
     //controlled components call render on every keystroke (ie. live search) where a ref calls
     // render only once.
+    const { actions } = useContext(ScoreboardContext);
     const playerInput = useRef();
 
     // handleValueChange = (e) => {
@@ -11,7 +13,7 @@ const AddPlayerForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // actions.addPlayer(playerInput.current.value);
+        actions.addPlayer(playerInput.current.value);
         e.currentTarget.reset();
     }
 
