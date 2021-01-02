@@ -2,11 +2,11 @@ import React from 'react';
 import Stats from './Stats';
 import Stopwatch from './Stopwatch';
 
-const Header = () => {
+const Header = ({ title }) => {
     return (
         <header>
             <Stats />
-            <h1>Scoreboard</h1>
+            <h1>{ title }</h1>
             <Stopwatch />
         </header>
     );

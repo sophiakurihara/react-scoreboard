@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Header from "./Header";
 import AddPlayerForm from "./AddPlayerForm";
 import PlayerList from "./PlayerList";
 
 
-const App = () => {
+export default () => {
     return (
             <div className="scoreboard">
-                <Header />
+                <Header title="Scoreboard"/>
 
                 <PlayerList/>
 
@@ -15,5 +15,3 @@ const App = () => {
             </div>
     );
 }
-
-export default App;
